@@ -102,6 +102,7 @@ public struct JSONSchema: Codable, Equatable {
     
     public struct Property: Codable, Equatable {
         public let type: JSONType
+        public let properties: [String: Property]?
         public let description: String?
         public let format: String?
         public let items: Items?
@@ -117,14 +118,15 @@ public struct JSONSchema: Codable, Equatable {
         public let uniqueItems: Bool?
 
         private enum CodingKeys: String, CodingKey {
-            case type, description, format, items, required, pattern, const
+            case type, properties, description, format, items, required, pattern, const
             case enumValues = "enum"
             case multipleOf, minimum, maximum
             case minItems, maxItems, uniqueItems
         }
         
-        public init(type: JSONType, description: String? = nil, format: String? = nil, items: Items? = nil, required: [String]? = nil, pattern: String? = nil, const: String? = nil, enumValues: [String]? = nil, multipleOf: Int? = nil, minimum: Double? = nil, maximum: Double? = nil, minItems: Int? = nil, maxItems: Int? = nil, uniqueItems: Bool? = nil) {
+        public init(type: JSONType, properties: [String: Property]? = nil, description: String? = nil, format: String? = nil, items: Items? = nil, required: [String]? = nil, pattern: String? = nil, const: String? = nil, enumValues: [String]? = nil, multipleOf: Int? = nil, minimum: Double? = nil, maximum: Double? = nil, minItems: Int? = nil, maxItems: Int? = nil, uniqueItems: Bool? = nil) {
             self.type = type
+            self.properties = properties
             self.description = description
             self.format = format
             self.items = items
